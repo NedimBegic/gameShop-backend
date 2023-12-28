@@ -1,6 +1,10 @@
 import express from "express";
 import * as dotenv from "dotenv";
 import products from "./routes/products";
+import { setupDatabase } from "./model/db";
+
+// start database
+const poop = setupDatabase();
 // Configuration
 dotenv.config();
 const app = express();

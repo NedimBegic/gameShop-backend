@@ -1,7 +1,16 @@
 import express from "express";
 import * as dotenv from "dotenv";
-import products from "./routes/products";
+import games from "./routes/games";
 const db = require("./model/db");
+
+// Configuration
+dotenv.config();
+const app = express();
+app.use(express.json());
+
+// routes
+app.use(games);
+
 // start database
 interface Game {
   // Define the structure of a game row
@@ -12,21 +21,6 @@ interface Game {
   role: string;
   // ... other fields as needed
 }
-db.execute("SELECT * FROM games")
-  .then((result: [][]) => {
-    console.log(result[0]);
-  })
-  .catch((err: Error) => {
-    console.log(err);
-  });
-
-// Configuration
-dotenv.config();
-const app = express();
-app.use(express.json());
-
-// routes
-app.use(products);
 
 app.listen(3000, () => {
   console.log("Server is running");

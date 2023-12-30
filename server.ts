@@ -1,10 +1,25 @@
 import express from "express";
 import * as dotenv from "dotenv";
 import products from "./routes/products";
-import { setupDatabase } from "./model/db";
-
+const db = require("./model/db");
 // start database
-const poop = setupDatabase();
+interface Game {
+  // Define the structure of a game row
+  id: number;
+  name: string;
+  description: string;
+  release_date: Date;
+  role: string;
+  // ... other fields as needed
+}
+db.execute("SELECT * FROM games")
+  .then((result: [][]) => {
+    console.log(result[0]);
+  })
+  .catch((err: Error) => {
+    console.log(err);
+  });
+
 // Configuration
 dotenv.config();
 const app = express();

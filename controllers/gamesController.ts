@@ -4,16 +4,16 @@ import asyncHandler from "../middleware/async";
 import ErrorResponse from "../utils/errorResponse";
 import { Game } from "../utils/types";
 
+// ROUTE: /games,
+// METHOD: GET,
+// DESC: get all games
 export const getAllGamesController = asyncHandler(
   async (req: Request, res: Response, next) => {
-    let gamesData: Game[] | undefined | string = await getAllGames();
-    // there is no games
+    let gamesData: Game[] | undefined = await getAllGames();
+    // there are no games
     if (!gamesData || gamesData.length === 0) {
       return next(new ErrorResponse("There are no games", 404));
     }
-    // there are games (convert to json)
-    gamesData = JSON.stringify(gamesData);
-
-    res.status(200).send(gamesData);
+    res.status(200).json(gamesData);
   }
 );

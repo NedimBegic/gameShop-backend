@@ -12,8 +12,4 @@ const getAllGames = async (): Promise<Game[] | undefined> => {
   }
 };
 
-/* module.exports = {
-  getAllGames,
-}; */
-
 export { getAllGames };

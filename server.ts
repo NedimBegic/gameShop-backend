@@ -10,7 +10,7 @@ const app = express();
 app.use(express.json());
 
 // routes
-app.use(games);
+app.use("/games", games);
 
 // middleware
 app.use(errorHandler);

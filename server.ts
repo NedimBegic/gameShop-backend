@@ -1,6 +1,7 @@
 import express from "express";
 import * as dotenv from "dotenv";
 import games from "./routes/games";
+import errorHandler = require("./middleware/error");
 const db = require("./model/db");
 
 // Configuration
@@ -11,16 +12,8 @@ app.use(express.json());
 // routes
 app.use(games);
 
-// start database
-interface Game {
-  // Define the structure of a game row
-  id: number;
-  name: string;
-  description: string;
-  release_date: Date;
-  role: string;
-  // ... other fields as needed
-}
+// middleware
+app.use(errorHandler);
 
 app.listen(3000, () => {
   console.log("Server is running");

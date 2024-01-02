@@ -1,10 +1,11 @@
 // In games.ts
 const db = require("../model/db");
+import { Game } from "../utils/types";
 
-const getAllGames = async () => {
+const getAllGames = async (): Promise<Game[] | undefined> => {
   try {
     const [rows, fields] = await db.execute("SELECT * FROM games");
-    const games = JSON.stringify(rows);
+    let games: Game[] = rows;
     return games;
   } catch (err) {
     console.log(err);

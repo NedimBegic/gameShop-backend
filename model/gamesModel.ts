@@ -1,6 +1,6 @@
 // In games.ts
 const db = require("../model/db");
-import { Game, PostGameResult } from "../utils/types";
+import { Game, PostGameResult, DeleteResult } from "../utils/types";
 
 // get all games
 const getAllGames = async (): Promise<Game[] | undefined> => {
@@ -8,6 +8,18 @@ const getAllGames = async (): Promise<Game[] | undefined> => {
     const [rows, fields] = await db.execute("SELECT * FROM games");
     let games: Game[] = rows;
     return games;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+// get a single game
+const getSingleGame = async (gameId: string): Promise<Game | undefined> => {
+  try {
+    const sql = `SELECT * FROM games WHERE id = ?`;
+    const [rows]: [Game[]] = await db.execute(sql, [gameId]);
+    const gameData: Game = rows[0];
+    return gameData;
   } catch (err) {
     console.log(err);
   }
@@ -41,4 +53,16 @@ const postGame = async (gameData: Game): Promise<PostGameResult> => {
     throw err;
   }
 };
-export { getAllGames, postGame };
+
+// delete a game
+const deleteGame = async (gameId: string): Promise<DeleteResult> => {
+  try {
+    const sql = `DELETE FROM games WHERE id = ?`;
+    const result: DeleteResult = db.execute(sql, [gameId]);
+    return result;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+export { getAllGames, getSingleGame, postGame, deleteGame };

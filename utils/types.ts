@@ -21,4 +21,15 @@ interface PostGameResult {
   message: string;
   insertedId?: number;
 }
-export { AsyncFun, Game, PostGameResult };
+// for deleted resoult
+interface DeleteResult {
+  fieldCount: number;
+  affectedRows: number;
+  insertId: number;
+  serverStatus: number;
+  warningCount: number;
+  message: string;
+  protocol41: boolean;
+  changedRows: number;
+}
+export { AsyncFun, Game, PostGameResult, DeleteResult };

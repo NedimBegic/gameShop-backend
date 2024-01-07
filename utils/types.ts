@@ -7,11 +7,18 @@ type AsyncFun = (
 ) => Promise<any>;
 // Games
 interface Game {
-  id: number;
+  id?: number;
   name: string;
+  price: number;
   description: string;
-  release_date: Date;
+  image: string;
+  date: Date;
   role: string;
 }
-
-export { AsyncFun, Game };
+// data for inserted game
+interface PostGameResult {
+  success: boolean;
+  message: string;
+  insertedId?: number;
+}
+export { AsyncFun, Game, PostGameResult };

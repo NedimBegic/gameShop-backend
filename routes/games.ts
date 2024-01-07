@@ -1,7 +1,10 @@
 import express, { Request, Response } from "express";
 const router = express.Router();
-const { getAllGamesController } = require("../controllers/gamesController");
+const {
+  getAllGamesController,
+  postGameController,
+} = require("../controllers/gamesController");
 
-router.get("/", getAllGamesController);
+router.get("/", getAllGamesController).post("/", postGameController);
 
 export default router;

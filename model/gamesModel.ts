@@ -55,10 +55,10 @@ const postGame = async (gameData: Game): Promise<PostGameResult> => {
 };
 
 // delete a game
-const deleteGame = async (gameId: string): Promise<DeleteResult> => {
+const deleteGame = async (gameId: string): Promise<DeleteResult[]> => {
   try {
     const sql = `DELETE FROM games WHERE id = ?`;
-    const result: DeleteResult = db.execute(sql, [gameId]);
+    const result: DeleteResult[] = db.execute(sql, [gameId]);
     return result;
   } catch (err) {
     console.log(err);

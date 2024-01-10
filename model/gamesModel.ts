@@ -27,7 +27,7 @@ const getSingleGame = async (gameId: string): Promise<Game | undefined> => {
 
 // post a game
 const postGame = async (gameData: Game): Promise<PostGameResult> => {
-  const { name, price, description, image, date, role } = gameData;
+  const { name, price, description, imageUrl, date, role } = gameData;
   try {
     const sql =
       "INSERT INTO games (name, price, description, image, date, role) VALUES (?, ?, ?, ?, ?, ?)";
@@ -35,7 +35,7 @@ const postGame = async (gameData: Game): Promise<PostGameResult> => {
       name,
       price,
       description,
-      image,
+      imageUrl,
       date,
       role,
     ]);

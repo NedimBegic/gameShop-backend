@@ -8,6 +8,7 @@ import {
 import asyncHandler from "../middleware/async";
 import ErrorResponse from "../utils/errorResponse";
 import { DeleteResult, Game } from "../utils/types";
+import uploadToImgur from "../model/imgur";
 
 // ROUTE: /games,
 // METHOD: GET,
@@ -44,9 +45,22 @@ export const getSingleGameController = asyncHandler(
 // DESC: post a single game
 export const postGameController = asyncHandler(
   async (req: Request, res: Response, next) => {
-    const gameData: Game = req.body;
+    const textData: Game = req.body;
+    const fileData: Express.Multer.File | undefined = req.file;
+    if (!textData) {
+      return next(new ErrorResponse("There is no game data", 400));
+    }
+    if (!fileData) {
+      return next(new ErrorResponse("There si no image file", 400));
+    }
+    // Convert file buffer to base64 and upload on imgur
+    const base64Data = fileData?.buffer.toString("base64");
+    const imageUrl = await uploadToImgur(base64Data);
+    // store all data and insert them in to the database
+    const gameData: Game = { ...textData, imageUrl };
     const result = await postGame(gameData);
-    if (result.success) {
+    console.log(result);
+    if (!result.success) {
       return next(new ErrorResponse("The game could't post", 404));
     }
     res.status(201).json({

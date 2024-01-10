@@ -11,7 +11,7 @@ interface Game {
   name: string;
   price: number;
   description: string;
-  image: string;
+  imageUrl: string;
   date: Date;
   role: string;
 }

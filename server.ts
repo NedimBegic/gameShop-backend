@@ -16,7 +16,18 @@ app.use(express.json());
 
 // routes
 app.use("/games", games);
-
+app.post("/upload", async (req, res) => {
+  try {
+    const uploadedFile = req.file?.buffer;
+    const base64Data = uploadedFile?.toString("base64");
+    /*     const imgUrl = await uploadToImgur(base64Data);
+    console.log(imgUrl);
+    res.json({ imgUrl }); */
+  } catch (error: any) {
+    console.error("Error:", error.message);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 // middleware
 app.use(errorHandler);
 

@@ -3,8 +3,13 @@ import asyncHandler from "../middleware/async";
 import ErrorResponse from "../utils/errorResponse";
 import { RegisteringUser, User } from "../utils/types";
 import uploadToImgur from "../model/imgur";
-import { hashPassword } from "../utils/encrypt";
-import { isNickNameTaken, isEmailTaken, saveNewUser } from "../model/auth";
+import { hashPassword, comparePasswords } from "../utils/encrypt";
+import {
+  isNickNameTaken,
+  isEmailTaken,
+  saveNewUser,
+  getLogingUser,
+} from "../model/auth";
 
 // ROUTE: /register,
 // METHOD POST,
@@ -66,5 +71,35 @@ export const registerController = asyncHandler(
 // METHOD: POST,
 // DESC: login a user and store to database
 export const loginController = asyncHandler(
-  async (req: Request, res: Response, next) => {}
+  async (req: Request, res: Response, next) => {
+    const { email, password } = req.body;
+    // Verify the email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return next(new ErrorResponse("Invalid email format", 400));
+    }
+    // search for user in database
+    const userData = await getLogingUser(email);
+    // there is no user
+    if (userData === null) {
+      return next(new ErrorResponse("There is no user with that email", 404));
+    }
+    // password match
+    const passMatch: boolean = await comparePasswords(
+      password,
+      userData.password
+    );
+    if (!passMatch) {
+      return next(new ErrorResponse("Password is incorect!", 404));
+    }
+
+    res.json({
+      success: true,
+      data: {
+        nickName: userData.nickName,
+        email: userData.email,
+        userImageUrl: userData.userImageUrl,
+      },
+    });
+  }
 );

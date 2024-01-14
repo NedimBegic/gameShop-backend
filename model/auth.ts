@@ -19,6 +19,24 @@ const saveNewUser = async (userData: User): Promise<any> => {
     return { success: false, msessage: err };
   }
 };
+
+/* +++ Get the loged in user */
+const getLogingUser = async (email: string): Promise<User | null> => {
+  let sql = "SELECT * FROM users WHERE email = ?";
+  try {
+    const [rows] = await db.execute(sql, [email]);
+    if (rows.length > 0) {
+      const userData: User = rows[0];
+      return userData;
+    } else {
+      return null;
+    }
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
 /* +++ Check if there is a user with that nickName */
 const isNickNameTaken = async (nickName: string): Promise<boolean> => {
   try {
@@ -45,4 +63,4 @@ const isEmailTaken = async (email: string): Promise<boolean> => {
   }
 };
 
-export { isNickNameTaken, isEmailTaken, saveNewUser };
+export { isNickNameTaken, isEmailTaken, saveNewUser, getLogingUser };

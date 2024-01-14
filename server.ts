@@ -4,7 +4,7 @@ import errorHandler = require("./middleware/error");
 import multer from "multer";
 // router
 import games from "./routes/games";
-import users from "./routes/user";
+import auth from "./routes/auth";
 
 // Configuration
 dotenv.config();
@@ -18,7 +18,7 @@ app.use(express.json());
 
 // routes
 app.use("/games", games);
-app.use(users);
+app.use("/auth", auth);
 // middleware
 app.use(errorHandler);
 

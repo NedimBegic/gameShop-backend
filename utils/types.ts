@@ -32,4 +32,19 @@ interface DeleteResult {
   protocol41: boolean;
   changedRows: number;
 }
-export { AsyncFun, Game, PostGameResult, DeleteResult };
+// for registering user
+interface RegisteringUser {
+  nickName: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
+// for user
+interface User {
+  id?: number;
+  nickName: string;
+  email: string;
+  password: string;
+  userImageUrl: string;
+}
+export { AsyncFun, Game, PostGameResult, DeleteResult, RegisteringUser, User };

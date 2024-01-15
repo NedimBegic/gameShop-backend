@@ -72,7 +72,15 @@ export const registerController = asyncHandler(
       .cookie("token", token, {
         httpOnly: true,
       })
-      .json({ success: true, message: "User succesfully saved in database" });
+      .json({
+        success: true,
+        data: {
+          nickName: newUser.nickName,
+          email: newUser.email,
+          userImageUrl: newUser.userImageUrl,
+        },
+        token: token,
+      });
   }
 );
 

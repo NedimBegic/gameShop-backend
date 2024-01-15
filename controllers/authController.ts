@@ -10,6 +10,7 @@ import {
   saveNewUser,
   getLogingUser,
 } from "../model/auth";
+import makeJwt from "../utils/setJsonWebToken";
 
 // ROUTE: /register,
 // METHOD POST,
@@ -64,9 +65,17 @@ export const registerController = asyncHandler(
     if (!saveUser.success) {
       return next(new ErrorResponse(saveUser.message, 404));
     }
-    res.json({ success: true, message: "User succesfully saved in database" });
+    // make token for user
+    const token = makeJwt(newUser);
+
+    res
+      .cookie("token", token, {
+        httpOnly: true,
+      })
+      .json({ success: true, message: "User succesfully saved in database" });
   }
 );
+
 // Route: /login,
 // METHOD: POST,
 // DESC: login a user and store to database
@@ -93,13 +102,21 @@ export const loginController = asyncHandler(
       return next(new ErrorResponse("Password is incorect!", 404));
     }
 
-    res.json({
-      success: true,
-      data: {
-        nickName: userData.nickName,
-        email: userData.email,
-        userImageUrl: userData.userImageUrl,
-      },
-    });
+    // make token for user
+    const token = makeJwt(userData);
+
+    res
+      .cookie("token", token, {
+        httpOnly: true,
+      })
+      .json({
+        success: true,
+        data: {
+          nickName: userData.nickName,
+          email: userData.email,
+          userImageUrl: userData.userImageUrl,
+        },
+        token: token,
+      });
   }
 );

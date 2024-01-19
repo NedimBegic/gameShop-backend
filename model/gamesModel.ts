@@ -5,7 +5,9 @@ import { Game, PostGameResult, DeleteResult } from "../utils/types";
 // get all games
 const getAllGames = async (): Promise<Game[] | undefined> => {
   try {
-    const [rows, fields] = await db.execute("SELECT * FROM games");
+    const [rows, fields] = await db.execute(
+      "SELECT name, price, description, image, date, role FROM games"
+    );
     let games: Game[] = rows;
     return games;
   } catch (err) {
@@ -16,7 +18,7 @@ const getAllGames = async (): Promise<Game[] | undefined> => {
 // get a single game
 const getSingleGame = async (gameId: string): Promise<Game | undefined> => {
   try {
-    const sql = `SELECT * FROM games WHERE id = ?`;
+    const sql = `SELECT name, price, description, image, date, role FROM games WHERE id = ?`;
     const [rows]: [Game[]] = await db.execute(sql, [gameId]);
     const gameData: Game = rows[0];
     return gameData;
@@ -27,10 +29,10 @@ const getSingleGame = async (gameId: string): Promise<Game | undefined> => {
 
 // post a game
 const postGame = async (gameData: Game): Promise<PostGameResult> => {
-  const { name, price, description, imageUrl, date, role } = gameData;
+  const { name, price, description, imageUrl, date, role, user_id } = gameData;
   try {
     const sql =
-      "INSERT INTO games (name, price, description, image, date, role) VALUES (?, ?, ?, ?, ?, ?)";
+      "INSERT INTO games (name, price, description, image, date, role, user_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
     const [result]: any = await db.execute(sql, [
       name,
       price,
@@ -38,6 +40,7 @@ const postGame = async (gameData: Game): Promise<PostGameResult> => {
       imageUrl,
       date,
       role,
+      user_id,
     ]);
 
     return {

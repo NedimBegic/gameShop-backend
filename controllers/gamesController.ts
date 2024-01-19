@@ -44,8 +44,8 @@ export const getSingleGameController = asyncHandler(
 // METHOD: POST,
 // DESC: post a single game
 export const postGameController = asyncHandler(
-  async (req: Request, res: Response, next) => {
-    const textData: Game = req.body;
+  async (req: CustomRequest, res: Response, next) => {
+    const textData: Game = { ...req.body, user_id: req.user.user_id };
     const fileData: Express.Multer.File | undefined = req.file;
     if (!textData) {
       return next(new ErrorResponse("There is no game data", 400));

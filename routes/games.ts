@@ -8,9 +8,9 @@ const {
 } = require("../controllers/gamesController");
 import { protect } from "../middleware/protect";
 
-router.get("/", protect, getAllGamesController).post("/", postGameController);
+router.get("/", getAllGamesController).post("/", protect, postGameController);
 router
   .get("/:id", getSingleGameController)
-  .delete("/:id", deleteSingleGameController);
+  .delete("/:id", protect, deleteSingleGameController);
 
 export default router;

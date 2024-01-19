@@ -74,9 +74,14 @@ export const postGameController = asyncHandler(
 // METHOD: DELETE,
 //DESC: delete a single game
 export const deleteSingleGameController = asyncHandler(
-  async (req: Request, res: Response, next) => {
+  async (req: CustomRequest, res: Response, next) => {
+    const gameForDelete = await getSingleGame(req.params.id);
+    if (req.user.user_id != gameForDelete?.user_id) {
+      return next(
+        new ErrorResponse("User not authorized to delete this game", 404)
+      );
+    }
     const result: DeleteResult[] = await deleteGame(req.params.id);
-    console.log(result[0]);
     if (result[0].affectedRows === 0) {
       return next(new ErrorResponse("There is no game with that id", 404));
     }

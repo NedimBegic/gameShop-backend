@@ -3,6 +3,7 @@ import * as dotenv from "dotenv";
 import errorHandler from "./middleware/error";
 import multer from "multer";
 import cookieParser from "cookie-parser";
+import { Request, Response } from "express";
 
 // router
 import games from "./routes/games";

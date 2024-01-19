@@ -6,8 +6,9 @@ const {
   postGameController,
   getSingleGameController,
 } = require("../controllers/gamesController");
+import { protect } from "../middleware/protect";
 
-router.get("/", getAllGamesController).post("/", postGameController);
+router.get("/", protect, getAllGamesController).post("/", postGameController);
 router
   .get("/:id", getSingleGameController)
   .delete("/:id", deleteSingleGameController);

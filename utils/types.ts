@@ -14,6 +14,7 @@ interface Game {
   imageUrl: string;
   date: Date;
   role: string;
+  user_id?: number;
 }
 // data for inserted game
 interface PostGameResult {
@@ -47,4 +48,16 @@ interface User {
   password: string;
   userImageUrl: string;
 }
-export { AsyncFun, Game, PostGameResult, DeleteResult, RegisteringUser, User };
+interface CustomRequest extends Request {
+  user?: any;
+}
+
+export {
+  AsyncFun,
+  Game,
+  PostGameResult,
+  DeleteResult,
+  RegisteringUser,
+  User,
+  CustomRequest,
+};

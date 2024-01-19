@@ -7,7 +7,7 @@ import {
 } from "../model/gamesModel";
 import asyncHandler from "../middleware/async";
 import ErrorResponse from "../utils/errorResponse";
-import { DeleteResult, Game } from "../utils/types";
+import { DeleteResult, Game, CustomRequest } from "../utils/types";
 import uploadToImgur from "../model/imgur";
 
 // ROUTE: /games,

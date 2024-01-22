@@ -15,3 +15,24 @@ export const getSingleUser = async (
     console.log(err);
   }
 };
+
+// upload a new image to a user
+export const uploadUserImage = async (
+  image: string,
+  user: string
+): Promise<{ success: boolean; message: string }> => {
+  let sql = "UPDATE users SET userImageUrl = ? WHERE nickName = ?";
+  try {
+    let [result] = await db.execute(sql, [image, user]);
+    return {
+      success: result.affectedRows === 1,
+      message:
+        result.affectedRows === 1
+          ? "User photo changed"
+          : "Failed to change user image",
+    };
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};

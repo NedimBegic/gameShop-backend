@@ -15,6 +15,17 @@ const getAllGames = async (): Promise<Game[] | undefined> => {
   }
 };
 
+// get all games by filter
+const getFIlteredGames = async (role: string): Promise<Game[] | undefined> => {
+  let sql = "SELECT * FROM games WHERE role = ?";
+  try {
+    const [rows] = await db.execute(sql, [role]);
+    let games: Game[] = rows;
+    return games;
+  } catch (err) {
+    console.log(err);
+  }
+};
 // get a single game
 const getSingleGame = async (gameId: string): Promise<Game | undefined> => {
   try {
@@ -68,4 +79,4 @@ const deleteGame = async (gameId: string): Promise<DeleteResult[]> => {
     throw err;
   }
 };
-export { getAllGames, getSingleGame, postGame, deleteGame };
+export { getAllGames, getSingleGame, postGame, deleteGame, getFIlteredGames };

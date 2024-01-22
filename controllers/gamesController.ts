@@ -4,6 +4,7 @@ import {
   postGame,
   getSingleGame,
   deleteGame,
+  getFIlteredGames,
 } from "../model/gamesModel";
 import asyncHandler from "../middleware/async";
 import ErrorResponse from "../utils/errorResponse";
@@ -15,7 +16,14 @@ import uploadToImgur from "../model/imgur";
 // DESC: get all games
 export const getAllGamesController = asyncHandler(
   async (req: Request, res: Response, next) => {
-    let gamesData: Game[] | undefined = await getAllGames();
+    let gamesData: Game[] | undefined;
+    if (req.query.role) {
+      let role: string = req.query.role as string;
+      gamesData = await getFIlteredGames(role);
+    } else {
+      gamesData = await getAllGames();
+    }
+
     // there are no games
     if (!gamesData || gamesData.length === 0) {
       return next(new ErrorResponse("There are no games", 404));

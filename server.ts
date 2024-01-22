@@ -3,11 +3,11 @@ import * as dotenv from "dotenv";
 import errorHandler from "./middleware/error";
 import multer from "multer";
 import cookieParser from "cookie-parser";
-import { Request, Response } from "express";
 
 // router
 import games from "./routes/games";
 import auth from "./routes/auth";
+import user from "./routes/user";
 
 // Configuration
 dotenv.config();
@@ -28,6 +28,7 @@ app.use(cookieParser());
 // Routes
 app.use("/games", games);
 app.use("/auth", auth);
+app.use("/user", user);
 
 // Error Handler
 app.use(errorHandler);

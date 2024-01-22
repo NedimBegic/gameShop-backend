@@ -42,7 +42,7 @@ interface RegisteringUser {
 }
 // for user
 interface User {
-  id?: number;
+  user_id?: number;
   nickName: string;
   email: string;
   password: string;

@@ -3,6 +3,7 @@ import * as dotenv from "dotenv";
 import errorHandler from "./middleware/error";
 import multer from "multer";
 import cookieParser from "cookie-parser";
+const cors = require("cors");
 
 // router
 import games from "./routes/games";
@@ -12,6 +13,15 @@ import user from "./routes/user";
 // Configuration
 dotenv.config();
 const app = express();
+
+// configure cors
+app.use(
+  cors({
+    origin: "*",
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+  })
+);
 
 // Multer configuration
 const storage = multer.memoryStorage();

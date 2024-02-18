@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "\"Backend code for game shop project\"",
   "main": "server.ts",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.ts"
+    "start": "node server.js"
   },
   "author": "Nedim Begić",
   "license": "ISC",

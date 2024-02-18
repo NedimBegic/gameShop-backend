@@ -1,12 +1,13 @@
-import express, { Request, Response } from "express";
-const router = express.Router();
-const {
+import express from "express";
+import {
   getAllGamesController,
   postGameController,
   getSingleGameController,
   deleteSingleGameController,
-} = require("../controllers/gamesController");
-import { protect } from "../middleware/protect";
+} from "../controllers/gamesController.js";
+import { protect } from "../middleware/protect.js";
+
+const router = express.Router();
 
 router.get("/", getAllGamesController).post("/", protect, postGameController);
 router

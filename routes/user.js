@@ -4,10 +4,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
+const userController_js_1 = require("../controllers/userController.js");
+const protect_js_1 = require("../middleware/protect.js");
 const router = express_1.default.Router();
-const userController_1 = require("../controllers/userController");
-const protect_1 = require("../middleware/protect");
-router
-    .get("/:nickName", userController_1.getUserController)
-    .put("/:nickName", protect_1.protect, userController_1.changeUserImageController);
+router.get("/:nickName", userController_js_1.getUserController);
+router.put("/:nickName", protect_js_1.protect, userController_js_1.changeUserImageController);
 exports.default = router;

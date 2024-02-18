@@ -1,14 +1,13 @@
 import express from "express";
-import * as dotenv from "dotenv";
-import errorHandler from "./middleware/error";
+import dotenv from "dotenv";
+import errorHandler from "./middleware/error.js";
 import multer from "multer";
 import cookieParser from "cookie-parser";
-const cors = require("cors");
-
+import cors from "cors";
 // router
-import games from "./routes/games";
-import auth from "./routes/auth";
-import user from "./routes/user";
+import games from "./routes/games.js";
+import auth from "./routes/auth.js";
+import user from "./routes/user.js";
 
 // Configuration
 dotenv.config();

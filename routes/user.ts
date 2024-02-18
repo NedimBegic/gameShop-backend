@@ -1,13 +1,13 @@
-import express, { Request, Response } from "express";
-const router = express.Router();
+import express from "express";
 import {
   changeUserImageController,
   getUserController,
-} from "../controllers/userController";
-import { protect } from "../middleware/protect";
+} from "../controllers/userController.js";
+import { protect } from "../middleware/protect.js";
 
-router
-  .get("/:nickName", getUserController)
-  .put("/:nickName", protect, changeUserImageController);
+const router = express.Router();
+
+router.get("/:nickName", getUserController);
+router.put("/:nickName", protect, changeUserImageController);
 
 export default router;

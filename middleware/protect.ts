@@ -23,6 +23,7 @@ export const protect = asyncHandler(
     try {
       const decoded = Jwt.verify(token, process.env.JWT_SECRET as Secret);
       req.user = decoded;
+      console.log(req.user);
       next();
     } catch (err) {
       console.log(err);

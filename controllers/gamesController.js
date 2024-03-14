@@ -89,7 +89,6 @@ exports.postGameController = (0, async_1.default)((req, res, next) =>
     const textData = Object.assign(Object.assign({}, req.body), {
       user_id: req.user.user_id,
     });
-    console.log(textData);
     const fileData = req.file;
     if (!textData) {
       return next(new errorResponse_1.default("There is no game data", 400));
